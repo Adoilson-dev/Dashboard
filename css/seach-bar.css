@@ -21,7 +21,7 @@
 
 .search-bar button {
     border-radius: 5px;
-    width:  100px;
+    width: 100px;
     height: 30px;
     border: none;
     background-color: green;
@@ -49,33 +49,44 @@
     }
 }
 
-.infor-usuario{
+.usuario-colun{
+    display: flex;
+}
+
+.infor-usuario {
     margin-left: 20px;
     color: rgb(0, 0, 0);
     font-size: 20px;
+    display: flex;
 }
 
-.infor-usuario i{
+.infor-usuario i {
     font-size: 20px;
 }
 
-.data-legend{
+.data-legend {
     color: #FFCE56;
-    padding-left:10px;
+    padding-left: 10px;
     font-size: 20px;
 }
 
-@media (max-width: 900px){
-      
+@media (max-width: 900px) {
+
     .search-bar button {
         margin-top: 5px;
         margin-bottom: 5px;
-        width:  100%;
+        width: 100%;
     }
+
     .search-bar input[type="date"] {
         display: flex;
         width: 95%;
         margin-top: 10px;
         margin-bottom: 10px;
+    }
+
+    .usuario-colun{
+        display: block;
+        
     }
 }
