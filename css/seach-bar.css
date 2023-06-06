@@ -81,11 +81,12 @@
     .search-bar input[type="date"] {
         display: flex;
         width: 95%;
-        margin-top: 10px;
+        margin-top: 5px;
         margin-bottom: 10px;
     }
 
     .usuario-colun{
         display: block;
+        margin-bottom: 10px;
     }
 }
