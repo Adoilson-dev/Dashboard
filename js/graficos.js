@@ -23,13 +23,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Configuração dos dados do gráfico 1
     var data1 = [
-        { value: 500.25, name: 'Dinheiro' },
-        { value: 1000.50, name: 'C. Crédito' },
-        { value: 750.75, name: 'C. Débito' },
-        { value: 300.00, name: 'Pix' },
-        { value: 200.80, name: 'Boleto' },
-        { value: 899.56, name: 'A prazo' },
-    ];
+        {
+            "value": 1000,
+            "name": "Pix"
+        },
+        {
+            "value": 2000,
+            "name": "credito"
+        },
+        {
+            "value": 5000,
+            "name": "boleto"
+        },
+        {
+            "value": 500,
+            "name": "dinheiro"
+        },
+        {
+            "value": 800,
+            "name": "debito"
+        }
+    ]
 
     // Configuração do gráfico 1
     var option1 = {
