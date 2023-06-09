@@ -1,4 +1,5 @@
 <?php
+
 // Configurações do banco de dados
 $servername = "localhost";
 $username = "root";
@@ -13,49 +14,87 @@ if ($conn->connect_error) {
     die("Erro na conexão com o banco de dados: " . $conn->connect_error);
 }
 
-// Consulta SQL para obter os dados da tabela
-$sql = "SELECT pix, credito, boleto, dinheiro, debito FROM pagamento";
+$startDate = $_GET['startDate'];
+$endDate = $_GET['endDate'];
 
-$result = $conn->query($sql);
+// Verifica se as datas foram recebidas como parâmetros GET
+if (isset($_GET['startDate']) && isset($_GET['endDate'])) {
+    // Obtém as datas dos parâmetros GET
+    $startDate = $_GET['startDate'];
+    $endDate = $_GET['endDate'];
+
+    // Consulta SQL para obter os dados da tabela usando placeholders
+    $sql = "SELECT pix, credito, boleto, dinheiro, debito FROM pagamento WHERE data >= ? AND data <= ?";
+    
+    // Prepara a declaração SQL
+    $stmt = $conn->prepare($sql);
+    
+    // Vincula os valores dos parâmetros às posições dos placeholders
+    $stmt->bind_param("ss", $startDate, $endDate);
+    
+    // Executa a consulta
+    $stmt->execute();
+    
+    // Obtém o resultado da consulta
+    $result = $stmt->get_result();
+} else {
+    // Caso as datas não sejam fornecidas, retorne um erro ou faça alguma outra ação
+    die("Datas não fornecidas.");
+}
 
 // Array para armazenar os dados do gráfico
-$dados = array();
+$dados = array(
+    array(
+        "value" => 0,
+        "name" => "Pix"
+    ),
+    array(
+        "value" => 0,
+        "name" => "Credito"
+    ),
+    array(
+        "value" => 0,
+        "name" => "Boleto"
+    ),
+    array(
+        "value" => 0,
+        "name" => "Dinheiro"
+    ),
+    array(
+        "value" => 0,
+        "name" => "Debito"
+    )
+);
 
 // Verifica se há resultados e armazena os dados no array
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
-        // Adiciona cada tipo de pagamento como um objeto com as propriedades value e name
-        $dados[] = array(
-            "value" => floatval($row['pix']),
-            "name" => "Pix"
-        );
-        $dados[] = array(
-            "value" => floatval($row['credito']),
-            "name" => "Credito"
-        );
-        $dados[] = array(
-            "value" => floatval($row['boleto']),
-            "name" => "Boleto"
-        );
-        $dados[] = array(
-            "value" => floatval($row['dinheiro']),
-            "name" => "Dinheiro"
-        );
-        $dados[] = array(
-            "value" => floatval($row['debito']),
-            "name" => "Debito"
-        );
+        // Soma os valores para cada tipo de pagamento
+        $dados[0]["value"] += floatval($row['pix']);
+        $dados[1]["value"] += floatval($row['credito']);
+        $dados[2]["value"] += floatval($row['boleto']);
+        $dados[3]["value"] += floatval($row['dinheiro']);
+        $dados[4]["value"] += floatval($row['debito']);
     }
+} else {
+    // Caso não haja resultados, retorne um erro ou faça alguma outra ação
+    die("Nenhum dado encontrado.");
 }
 
 // Fecha a conexão com o banco de dados
 $conn->close();
 
 // Retorna os dados como JSON
-echo json_encode($dados);
+$jsonData = json_encode($dados);
 
 // Salvar os dados em um arquivo de texto
 $file = fopen('dados.txt', 'w');
-fwrite($file, json_encode($dados,JSON_PRETTY_PRINT));
-fclose($file);
+if ($file) {
+    fwrite($file, $jsonData);
+    fclose($file);
+    echo "Arquivo atualizado com sucesso.";
+} else {
+    echo "Erro ao abrir o arquivo para escrita.";
+}
+
 ?>

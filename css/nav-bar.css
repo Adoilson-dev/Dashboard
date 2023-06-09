@@ -36,14 +36,14 @@ font-size: 15px;
   border: none;
   background-color: #333;
   color: white;
-  font-size: 25px;
+  font-size: 20px;
   cursor: pointer;
   align-items: center;
   transition: background-color 0.3s ease;
 }
 .logout-button i{
   margin-right: 1px;
-  font-size: 25px;
+  font-size: 20px;
 }
 
 
@@ -65,7 +65,7 @@ a:hover {
 }
 
 .logo {
-  font-size: 24px;
+  font-size: 2px;
   text-transform: uppercase;
   letter-spacing: 4px;
 }

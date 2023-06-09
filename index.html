@@ -31,42 +31,41 @@
 
 </head>
 
-<!--teste-->
 <body>
-    <div class="menu-mobile">
-        <div class="menu_content">
-            <div class="item floating_item" style="background-color: #0081CF; z-index: 1; rotate: 45deg;">
-                <i class='bx bx-x'></i>
-            </div>
-            <div class="options">
-                <div class="item" style="background-color: #333;">
-                    <i class='bx bxs-basket'></i>
-                </div>
-                <div class="item" style="background-color: #333;">
-                    <i class='bx bx-package'></i>
-                </div>
-                <div class="item" style="background-color: #333;">
-                    <i class='bx bxs-dollar-circle'></i>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
+    
     <header>
         <nav class="navbar">
             <img class="navbar-icon" src="https://Idealer-up.com.br/logo_sit.png">
             <span class="navbar-title">Sit Dashboard</span>
 
             <ul class="nav-list">
-                <li><i class="fas fa-cash-register"></i></i><a href="#">Vendas</a></li>
-                <li><i class="fas fa-box-open"></i><a href="#">Estoque</a></li>
-                <li><i class="fas fa-dollar-sign"></i><a href="#">Financeiro</a></li>
+                <li><i class='bx bxs-basket'></i></i><a href="#">Vendas</a></li>
+                <li><i class='bx bx-package'></i><a href="#">Estoque</a></li>
+                <li><i class='bx bxs-dollar-circle'></i><a href="#">Financeiro</a></li>
             </ul>
 
 
-            <button class="logout-button"><i class="fas fa-sign-out-alt"></i>Sair</button>
+            <button class="logout-button">Sair <i class="fas fa-sign-out-alt"></i></button>
         </nav>
+
+        <div class="menu-mobile">
+            <div class="menu_content">
+                <div class="item floating_item" style="background-color: #0081CF; z-index: 1; rotate: 45deg;">
+                    <i class='bx bx-x'></i>
+                </div>
+                <div class="options">
+                    <div class="item" style="background-color: #333;">
+                        <i class='bx bxs-basket'></i>
+                    </div>
+                    <div class="item" style="background-color: #333;">
+                        <i class='bx bx-package'></i>
+                    </div>
+                    <div class="item" style="background-color: #333;">
+                        <i class='bx bxs-dollar-circle'></i>
+                    </div>
+                </div>
+            </div>
+        </div>
     </header>
 
     <div class="search-bar">
@@ -81,9 +80,13 @@
 
         </div>
         <label class="data-legend" for="startDate">Data inicial:</label>
+
         <input type="date" id="startDate" placeholder="Data Inicial">
+
         <label class="data-legend" for="endDate">Data final:</label>
+
         <input type="date" id="endDate" placeholder="Data Final">
+
         <button onclick="animateButton()">Buscar</button>
 
     </div>
@@ -173,16 +176,17 @@
 
     <footer class="footer">
         <div class="container">
-            <p style="text-align: center; margin: 0 auto;">© 2023 Sit Dashboard. Todos os direitos reservados.
+            <p>© 2023 Sit Dashboard. Todos os direitos reservados.
                 Desenvolvido por <a href="https://sitsys.com.br">SistemaSIT</a>.</p>
         </div>
     </footer>
 
-
+    <script src="./js/botton.js"></script>
     <script src="./js/graficos.js"> </script>
     <script src="./js/nv-bar-mobile.js"></script>
     <script src="/js/menu.js"></script>
     <script src="js/preloader.js"></script>
+    
 </body>
 
 </html>
