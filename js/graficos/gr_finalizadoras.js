@@ -1,3 +1,5 @@
+
+
 // Setup
 const data = {
   labels: ['Dinheiro', 'Pix', 'C.Credito', 'C.Debito', 'Boleto', 'A Prazo', 'Trnsf.Bancaria'],
@@ -18,21 +20,26 @@ const config = {
   options: {
     plugins: {
       tooltip: {
-        enabled: false // Desabilita os tooltips
+        enabled: true // Desabilita os tooltips
       },
       datalabels: {
-        align: 'center',
-        anchor: 'end',
-        align: 'center',
+        color: 'black',
+        anchor: 'center',
+        align:'end',
 
-        formatter: (value, context) => { // Função de formatação dos rótulos
+        
+        formatter: (value, context) => {
+          const labels = context.chart.data.labels; // Obtém as etiquetas das formas de pagamento
           const datapoints = context.chart.data.datasets[0].data;
+        
           function totalSum(total, datapoint) {
             return total + datapoint;
           }
-          const totalValue = datapoints.reduce(totalSum, 0); // Calcula a soma total dos valores
-          const percentageValue = ((value / totalValue) * 100).toFixed(1); // Calcula a porcentagem correspondente ao valor
-          const display = [`${value} R$`, `${percentageValue} %`]; // Formata o rótulo com o valor e a porcentagem
+        
+          const totalValue = datapoints.reduce(totalSum, 0);
+          const percentageValue = ((value / totalValue) * 100).toFixed(1);
+          const label = labels[context.dataIndex]; // Obtém o nome da forma de pagamento correspondente ao rótulo atual
+          const display = [`${label}: R$${value} (${percentageValue}%)`]; // Adiciona o nome, valor e porcentagem ao rótulo
           return display;
         }
       }
@@ -45,6 +52,6 @@ const config = {
 
 
 const myChart = new Chart(
-  document.getElementById('chart1'),
+  document.getElementById('chart-finalizadoras'),
   config
 );

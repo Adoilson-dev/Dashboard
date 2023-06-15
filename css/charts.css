@@ -76,6 +76,7 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     flex-direction: column;
     align-items: center;
+    margin-bottom: 10px;
 
 }
 
@@ -90,4 +91,9 @@
     background-color: #FFCE56;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+}
+
+.chart {
+    padding: 0px;
+    border-color: #f2f2f2;
 }

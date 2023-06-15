@@ -29,7 +29,7 @@
         justify-content: center;
       }
       .chartBox {
-        width: 700px;
+        width: 400px;
         padding: 20px;
         border-radius: 20px;
         border: solid 3px rgba(54, 162, 235, 1);
@@ -53,9 +53,10 @@
       labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
       datasets: [{
         label: 'Weekly Sales',
-        data: [18, 12, 6, 9, 12, 3, 9],
+        data: [180, 120, 600, 900, 120, 300, 900],
         backgroundColor: [
-          'rgba(255, 26, 104, 0.2)',
+
+        'rgba(255, 26, 104, 0.2)',
           'rgba(54, 162, 235, 0.2)',
           'rgba(255, 206, 86, 0.2)',
           'rgba(75, 192, 192, 0.2)',
@@ -72,21 +73,69 @@
           'rgba(255, 159, 64, 1)',
           'rgba(0, 0, 0, 1)'
         ],
-        borderWidth: 1
+     
+
+        
+        borderWidth: 1,
+        cutout:'70%',
+        borderRadius: 0,
       }]
     };
 
-    // config 
+    // customização das datalabels
+    const customDatalabels = {
+      id: 'customDatalabels',
+      afterDatasetsDraw(chart, args, pluginOptions) {
+        const {ctx, data, chartArea: { top, bottom, left, width, height} } = 
+        chart;
+
+        ctx.save();
+        const halfWidth = width / 2 + left;
+        const halfHeight = height / 2 + top;
+        
+        data.datasets[0].data.forEach((datapoint,index) => {
+          const {x, y } = chart.getDatasetMeta(0).data[index].tooltipPosition();
+          ctx.font = 'bold 12px sans-serif';
+          ctx.fillStyle = data.datasets[0].borderColor[index];
+          ctx.textAlign = 'center';
+          ctx.textBaseLine = 'middle';
+
+          if(datapoint >=3) {
+            ctx.fillText(datapoint, x, y);
+          } else {
+            const xLine = x >= halfWidth ? x + 15 : x - 15;
+            const yLine = y >= halfHeight ? y + 25 : y - 25;
+            const extraLine = x >= halfWidth ? 15 : -15;
+            const textWidth = ctx.measureText(datapoint).width;
+            const textWidthPosition = x >= halfWidthm? textWidth : -textWidth;
+
+            ctx.strokeStyle = data.datasets[0].borderColor[index];
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(xLine, yLine);
+            ctx.lineTo(xLine + extraLine, yLine);
+            ctx.strok();
+
+            ctx.fillText(datapoint, xLine + extraLine + textWidthPosition, yLine);
+          }
+        })
+      }
+    }
+
+
+    // configuração do grafico
     const config = {
-      type: 'bar',
+      type: 'doughnut',
       data,
       options: {
-        scales: {
-          y: {
-            beginAtZero: true
+        plugins: {
+          legend: {
+            display: false
           }
         }
-      }
+        
+      },
+      plugins: [customDatalabels]
     };
 
     // render init block
