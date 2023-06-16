@@ -2,6 +2,17 @@ const dataComparativoSemanal = {
     labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
     datasets: [{
       data: [100, 150, 200, 180, 220, 250, 210],
+
+      backgroundColor: [
+        '#ff0000',
+        '#0000ff',
+        '#ffA500',
+        '#008000',
+        '#ffff00',
+        '#800080',
+        '#00ffff'
+      ],
+
       borderWidth: 1,
       cutout: '60%',
     }]
