@@ -1,10 +1,9 @@
-
-
 // Setup
 const data = {
   labels: ['Dinheiro', 'Pix', 'C.Credito', 'C.Debito', 'Boleto', 'A Prazo', 'Trnsf.Bancaria'],
+  
   datasets: [{
-    label: 'Vendas por Finalizadoras',
+    
     data: [1500, 2000, 3000, 600, 800, 454, 745],
 
     borderWidth: 1,

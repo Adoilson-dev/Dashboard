@@ -1,153 +1,216 @@
-<!doctype html>
-<html lang="pt-br">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Getting Started with Chart JS with www.chartjs3.com</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        font-family: sans-serif;
-      }
-      .chartMenu {
-        width: 100vw;
-        height: 40px;
-        background: #1A1A1A;
-        color: rgba(54, 162, 235, 1);
-      }
-      .chartMenu p {
-        padding: 10px;
-        font-size: 20px;
-      }
-      .chartCard {
-        width: 100vw;
-        height: calc(100vh - 40px);
-        background: rgba(54, 162, 235, 0.2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .chartBox {
-        width: 400px;
-        padding: 20px;
-        border-radius: 20px;
-        border: solid 3px rgba(54, 162, 235, 1);
-        background: white;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="chartMenu">
-      <p>WWW.CHARTJS3.COM (Chart JS <span id="chartVersion"></span>)</p>
-    </div>
-    <div class="chartCard">
-      <div class="chartBox">
-        <canvas id="myChart"></canvas>
-      </div>
-    </div>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
-    <script>
-    // setup 
-    const data = {
-      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gráficos</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+</head>
+<body>
+  <div style="width: 25%; float: left;">
+    <canvas id="chart-finalizadoras"></canvas>
+  </div>
+  <div style="width: 25%; float: left;">
+    <canvas id="chart-custo-lucro"></canvas>
+  </div>
+  <div style="width: 25%; float: left;">
+    <canvas id="chart-vendas-vendedor"></canvas>
+  </div>
+  <div style="width: 25%; float: left;">
+    <canvas id="chart-comparativo-semanal"></canvas>
+  </div>
+
+  <script>
+    const dataFinalizadoras = {
+      labels: ['Dinheiro', 'Pix', 'C.Credito', 'C.Debito', 'Boleto', 'A Prazo', 'Trnsf.Bancaria'],
       datasets: [{
-        label: 'Weekly Sales',
-        data: [180, 120, 600, 900, 120, 300, 900],
-        backgroundColor: [
-
-        'rgba(255, 26, 104, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-          'rgba(0, 0, 0, 0.2)'
-        ],
-        borderColor: [
-          'rgba(255, 26, 104, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-          'rgba(0, 0, 0, 1)'
-        ],
-     
-
-        
+        data: [1500, 2000, 3000, 600, 800, 454, 745],
         borderWidth: 1,
-        cutout:'70%',
-        borderRadius: 0,
+        cutout: '60%',
       }]
     };
 
-    // customização das datalabels
-    const customDatalabels = {
-      id: 'customDatalabels',
-      afterDatasetsDraw(chart, args, pluginOptions) {
-        const {ctx, data, chartArea: { top, bottom, left, width, height} } = 
-        chart;
-
-        ctx.save();
-        const halfWidth = width / 2 + left;
-        const halfHeight = height / 2 + top;
-        
-        data.datasets[0].data.forEach((datapoint,index) => {
-          const {x, y } = chart.getDatasetMeta(0).data[index].tooltipPosition();
-          ctx.font = 'bold 12px sans-serif';
-          ctx.fillStyle = data.datasets[0].borderColor[index];
-          ctx.textAlign = 'center';
-          ctx.textBaseLine = 'middle';
-
-          if(datapoint >=3) {
-            ctx.fillText(datapoint, x, y);
-          } else {
-            const xLine = x >= halfWidth ? x + 15 : x - 15;
-            const yLine = y >= halfHeight ? y + 25 : y - 25;
-            const extraLine = x >= halfWidth ? 15 : -15;
-            const textWidth = ctx.measureText(datapoint).width;
-            const textWidthPosition = x >= halfWidthm? textWidth : -textWidth;
-
-            ctx.strokeStyle = data.datasets[0].borderColor[index];
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-            ctx.lineTo(xLine, yLine);
-            ctx.lineTo(xLine + extraLine, yLine);
-            ctx.strok();
-
-            ctx.fillText(datapoint, xLine + extraLine + textWidthPosition, yLine);
-          }
-        })
-      }
-    }
-
-
-    // configuração do grafico
-    const config = {
+    const configFinalizadoras = {
       type: 'doughnut',
-      data,
+      data: dataFinalizadoras,
       options: {
         plugins: {
-          legend: {
-            display: false
+          tooltip: {
+            enabled: true // Desabilita os tooltips
+          },
+          datalabels: {
+            color: 'black',
+            anchor: 'center',
+            align:'end',
+            formatter: (value, context) => {
+              const labels = context.chart.data.labels; // Obtém as etiquetas das formas de pagamento
+              const datapoints = context.chart.data.datasets[0].data;
+
+              function totalSum(total, datapoint) {
+                return total + datapoint;
+              }
+
+              const totalValue = datapoints.reduce(totalSum, 0);
+              const percentageValue = ((value / totalValue) * 100).toFixed(1);
+              const label = labels[context.dataIndex]; // Obtém o nome da forma de pagamento correspondente ao rótulo atual
+              const display = [`${label}: R$${value} (${percentageValue}%)`]; // Adiciona o nome, valor e porcentagem ao rótulo
+              return display;
+            }
           }
-        }
-        
+        },
+        responsive: true,
+        maintainAspectRatio: false
       },
-      plugins: [customDatalabels]
+      plugins: [ChartDataLabels]
     };
 
-    // render init block
-    const myChart = new Chart(
-      document.getElementById('myChart'),
-      config
+    const myChartFinalizadoras = new Chart(
+      document.getElementById('chart-finalizadoras'),
+      configFinalizadoras
     );
 
-    // Instantly assign Chart.js version
-    const chartVersion = document.getElementById('chartVersion');
-    chartVersion.innerText = Chart.version;
-    </script>
+    const dataCustoLucro = {
+      labels: ['Custo', 'Lucro'],
+      datasets: [{
+        data: [5000, 3000],
+        borderWidth: 1,
+        cutout: '60%',
+      }]
+    };
 
-  </body>
+    const configCustoLucro = {
+      type: 'doughnut',
+      data: dataCustoLucro,
+      options: {
+        plugins: {
+          tooltip: {
+            enabled: true // Desabilita os tooltips
+          },
+          datalabels: {
+            color: 'black',
+            anchor: 'center',
+            align:'end',
+            formatter: (value, context) => {
+              const labels = context.chart.data.labels; // Obtém as etiquetas de custo e lucro
+              const datapoints = context.chart.data.datasets[0].data;
+
+              function totalSum(total, datapoint) {
+                return total + datapoint;
+              }
+
+              const totalValue = datapoints.reduce(totalSum, 0);
+              const percentageValue = ((value / totalValue) * 100).toFixed(1);
+              const label = labels[context.dataIndex]; // Obtém o nome de custo ou lucro correspondente ao rótulo atual
+              const display = [`${label}: R$${value} (${percentageValue}%)`]; // Adiciona o nome, valor e porcentagem ao rótulo
+              return display;
+            }
+          }
+        },
+        responsive: true,
+        maintainAspectRatio: false
+      },
+      plugins: [ChartDataLabels]
+    };
+
+    const myChartCustoLucro = new Chart(
+      document.getElementById('chart-custo-lucro'),
+      configCustoLucro
+    );
+
+    const dataVendasVendedor = {
+      labels: ['Vendedor 1', 'Vendedor 2', 'Vendedor 3', 'Vendedor 4', 'Vendedor 5'],
+      datasets: [{
+        data: [2500, 1800, 3200, 1500, 2800],
+        borderWidth: 1,
+        cutout: '60%',
+      }]
+    };
+
+    const configVendasVendedor = {
+      type: 'doughnut',
+      data: dataVendasVendedor,
+      options: {
+        plugins: {
+          tooltip: {
+            enabled: true // Desabilita os tooltips
+          },
+          datalabels: {
+            color: 'black',
+            anchor: 'center',
+            align:'end',
+            formatter: (value, context) => {
+              const labels = context.chart.data.labels; // Obtém as etiquetas dos vendedores
+              const datapoints = context.chart.data.datasets[0].data;
+
+              function totalSum(total, datapoint) {
+                return total + datapoint;
+              }
+
+              const totalValue = datapoints.reduce(totalSum, 0);
+              const percentageValue = ((value / totalValue) * 100).toFixed(1);
+              const label = labels[context.dataIndex]; // Obtém o nome do vendedor correspondente ao rótulo atual
+              const display = [`${label}: R$${value} (${percentageValue}%)`]; // Adiciona o nome, valor e porcentagem ao rótulo
+              return display;
+            }
+          }
+        },
+        responsive: true,
+        maintainAspectRatio: false
+      },
+      plugins: [ChartDataLabels]
+    };
+
+    const myChartVendasVendedor = new Chart(
+      document.getElementById('chart-vendas-vendedor'),
+      configVendasVendedor
+    );
+
+    const dataComparativoSemanal = {
+      labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+      datasets: [{
+        data: [100, 150, 200, 180, 220, 250, 210],
+        borderWidth: 1,
+        cutout: '60%',
+      }]
+    };
+
+    const configComparativoSemanal = {
+      type: 'doughnut',
+      data: dataComparativoSemanal,
+      options: {
+        plugins: {
+          tooltip: {
+            enabled: true // Desabilita os tooltips
+          },
+          datalabels: {
+            color: 'black',
+            anchor: 'center',
+            align:'end',
+            formatter: (value, context) => {
+              const labels = context.chart.data.labels; // Obtém as etiquetas dos dias da semana
+              const datapoints = context.chart.data.datasets[0].data;
+
+              function totalSum(total, datapoint) {
+                return total + datapoint;
+              }
+
+              const totalValue = datapoints.reduce(totalSum, 0);
+              const percentageValue = ((value / totalValue) * 100).toFixed(1);
+              const label = labels[context.dataIndex]; // Obtém o nome do dia da semana correspondente ao rótulo atual
+              const display = [`${label}: ${value} vendas (${percentageValue}%)`]; // Adiciona o nome, valor e porcentagem ao rótulo
+              return display;
+            }
+          }
+        },
+        responsive: true,
+        maintainAspectRatio: false
+      },
+      plugins: [ChartDataLabels]
+    };
+
+    const myChartComparativoSemanal = new Chart(
+      document.getElementById('chart-comparativo-semanal'),
+      configComparativoSemanal
+    );
+  </script>
+</body>
 </html>

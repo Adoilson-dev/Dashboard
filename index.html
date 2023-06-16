@@ -137,66 +137,42 @@
 
     <div class="alinhamento">
         <div class="square">
-            <div class="chart-title">Vendas x Finalizadoras</div>
+            <div class="chart-title"><i class="fas fa-wallet"></i> Vendas x Finalizadoras</div>
             <div class="chart-container">
-                <canvas id="chart-finalizadoras" class="chart"></canvas>
+                <canvas id="chart-finalizadoras"></canvas>
             </div>
         </div>
 
         <div class="square">
-            <div class="chart-title">Vendas x Categoria/linha</div>
+            <div class="chart-title"><i class="fas fa-table"></i> Vendas x Categoria/linha</div>
             <div class="chart-container">
-                <canvas id="chart-categoria" class="chart"></canvas>
+                <canvas id="chart-categoria"></canvas>
             </div>
         </div>
 
         <div class="square">
-            <div class="chart-title">Custo x Lucro</div>
+            <div class="chart-title"><i class="fas fa-balance-scale"></i> Custo x Lucro</div>
             <div class="chart-container">
-                <canvas id="chart3" class="chart"></canvas>
+                <canvas id="chart-custo-lucro"></canvas>
             </div>
         </div>
 
         <div class="square">
-            <div class="chart-title">Vendas por vendedor</div>
+            <div class="chart-title"><i class="fas fa-users"></i> Vendas por vendedor</div>
             <div class="chart-container">
-                <canvas id="chart4" class="chart"></canvas>
+                <canvas id="chart-vendas-vendedor"></canvas>
             </div>
         </div>
 
         <div class="square">
-            <div class="chart-title">Comparativo Semanal</div>
+            <div class="chart-title"><i class="far fa-calendar-alt"></i> Comparativo Semanal</div>
             <div class="chart-container">
-                <canvas id="chart4" class="chart"></canvas>
+                <canvas id="chart-comparativo-semanal"></canvas>
             </div>
         </div>
 
     </div>
 
-    <!--<div class="square-charts">
-        <div class="chart-title">Vendas x Pagamento</div>
-        <div class="chart-container" id="chart-container1"></div>
-    </div>
-
-    <div class="square-charts">
-        <div class="chart-title">Vendas x Categoria/linha</div>
-        <div class="chart-container" id="chart-container2"></div>
-    </div>
-
-    <div class="square-charts">
-        <div class="chart-title">Custo x Lucro</div>
-        <div class="chart-container" id="chart-container3"></div>
-    </div>
-
-    <div class="square-charts">
-        <div class="chart-title">Vendas x Vendedor</div>
-        <div class="chart-container" id="chart-container4"></div>
-    </div>
-
-    <div class="square-charts">
-        <div class="chart-title">Comparativo Semanal</div>
-        <div class="chart-container" id="bar1"></div>
-    </div>-->
     </div>
     </head>
     <!-- início do preloader -->
@@ -220,9 +196,13 @@
     </footer>
 
     <script src="./js/botton.js"></script>
-    <script src="./js/graficos/gr_finalizadoras.js"></script>
     <script src="./js/menu.js"></script>
     <script src="./js/preloader.js"></script>
+    <script src="./js/graficos/gr_finalizadoras.js"></script>
+    <script src="./js/graficos/gr_categoria.js"></script>
+    <script src="./js/graficos/gr_custo_lucro.js"></script>
+    <script src="./js/graficos/gr_vendedor.js"></script>
+    <script src="./js/graficos/gr_comparatipo.js"></script>
 </body>
 
 </html>

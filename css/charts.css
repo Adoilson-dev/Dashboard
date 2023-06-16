@@ -93,6 +93,9 @@
     border-top-right-radius: 20px;
 }
 
+.chart-title i {
+    font-size: 20px;
+}
 .chart {
     padding: 0px;
     border-color: #f2f2f2;
