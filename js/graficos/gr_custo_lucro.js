@@ -17,8 +17,8 @@ const dataCustoLucro = {
         },
         datalabels: {
           color: 'black',
-          anchor: 'center',
-          align:'end',
+          anchor: 'end',
+          align:'center',
           formatter: (value, context) => {
             const labels = context.chart.data.labels; // Obtém as etiquetas de custo e lucro
             const datapoints = context.chart.data.datasets[0].data;
